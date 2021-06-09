@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        remove nico query
-// @namespace   http://localhost/
+// @namespace   https://github.com/u38d/remove_nico_query
 // @description remove niconico's link query
 // @include     https://*.nicovideo.jp/*
 // @include     http://*.nicovideo.jp/*
