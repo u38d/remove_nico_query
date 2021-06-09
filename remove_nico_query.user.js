@@ -13,12 +13,13 @@
 /**
  * URI文字列中のQueryを削除。
  */
+const uriRe = /(watch|seiga|user|article|comic|community)\/([A-Za-z]*\d+)\?[^#]*(.*)$/;
 const removeQueryString = (s) => {
 	if (s.indexOf('?') === -1) {
-		// '?'を含まないときは終了
+		//目標のURIではない
 		return s;
 	}
-	return s.replace(/(watch|seiga|user|article|comic|community)\/([A-Za-z]*\d+)\?[^#]*(.*)$/, "$1/$2$3");
+	return s.replace(uriRe, "$1/$2$3");
 }
 
 /**
