@@ -13,13 +13,32 @@
 /**
  * URI文字列中のQueryを削除。
  */
-const uriRe = /(watch|seiga|user|article|comic|community)\/([A-Za-z]*\d+)\?[^#]*(.*)$/;
+const uriRe = /(.*)(watch|seiga|user|article|comic|community)(\/[A-Za-z]*\d+)\?([^#]*)(.*)$/;
+const allowQueryList = ['comments_page'];
 const removeQueryString = (s) => {
-	if (s.indexOf('?') === -1) {
+	const result = s.match(uriRe);
+	if (!result) {
 		//目標のURIではない
 		return s;
 	}
-	return s.replace(uriRe, "$1/$2$3");
+
+	let newQueryList = [];
+	const queryList = result[4].split('&');
+	queryList.forEach(
+		(e) => {
+			const pair = e.split('=');
+			if (allowQueryList.includes(pair[0])) {
+				newQueryList.push(e);
+			} 
+		}
+	);
+
+	let newQuery = '';
+	if (newQueryList.length > 0) {
+		newQuery = '?';
+		newQuery += newQueryList.join('&');
+	}
+	return result[1] + result[2] + result[3] + newQuery + result[5];
 }
 
 /**
