@@ -76,5 +76,6 @@ childListObserver.observe(document, childListConfig);
  * 参考
  * ニコニコ動画 リンクに付与されるrefパラメータ削除
  * http://d.hatena.ne.jp/alunko/20130922/1379797016
+ * https://profile.hatena.ne.jp/alunko/ 一行紹介 記事、コードは全てライセンスフリーです
  */
 
