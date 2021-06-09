@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+ <head>
+  <title>ニコニコ動画/静画の余計なQueryを削除するテスト</title>
+  <script src="remove_nico_query.user.js" defer="defer" async="async"></script>
+ </head>
+ <body>
+  <h1>ニコニコ動画/静画の余計なQueryを削除するテスト</h1>
+  <ul>
+   <li>http://www.nicovideo.jp/watch/sm1?mypage_nicorepo</li>
+   <li>http://seiga.nicovideo.jp/seiga/im2?track=own</li>
+   <li>http://www.nicovideo.jp/user/3?zeromypage_nicorepo</li>
+   <li>http://www.nicovideo.jp/watch/sm4?ref=video%2Franking%2Ffav%2Fdaily%2Fimas%2Fnow%2F10</li>
+  </ul>
+  <p>など。</p>
+  <ol id="video_list">
+   <li><a href="http://www.nicovideo.jp/watch/sm1?mypage_nicorepo">/watch/sm1</a></li>
+   <li><a href="http://seiga.nicovideo.jp/seiga/im2?track=own">/seiga/im2</a></li>
+   <li><a href="http://www.nicovideo.jp/user/3?zeromypage_nicorepo">/user/3</a></li>
+   <li><a href="http://www.nicovideo.jp/watch/sm4?ref=video%2Franking%2Ffav%2Fdaily%2Fimas%2Fnow%2F10">/watch/sm4</a></li>
+   <li><a href="http://www.nicovideo.jp/watch/sm5?mypage_nicorepo">/watch/sm5</a></li>
+   <li><a href="http://www.nicovideo.jp/watch/sm6">/watch/sm6</a></li>
+   <li><a href="/watch/sm7?query">/watch/sm7?query</a></li>
+   <li><a href="/watch/sm8?query#fragment">/watch/sm8?query#fragment</a></li>
+   <li><a href="../watch/sm9?query">/watch/sm9</a></li>
+   <li><a href="http://ch.nicovideo.jp/article/ar10?zeromypage_nicorepo">http://ch.nicovideo.jp/article/ar10?zeromypage_nicorepo</a></li>
+   <li><a href="http://seiga.nicovideo.jp/comic/11?nicorepo_user_manga_favorite&amp;zeromypage_nicorepo">http://seiga.nicovideo.jp/comic/11?nicorepo_user_manga_favorite&amp;zeromypage_nicorepo</a></li>
+  </ol>
+  <form onsubmit="append(); return false;">
+   <input value="?mypage_nicorepo" type="text" onchange="query_on_change(this.value)" />
+   <input value="追加" type="button" onclick="append()" />
+  </form>
+  <script>
+<![CDATA[
+var number = 100;
+var query = "?mypage_nicorepo";
+var query_input = document.getElementById("query");
+
+var query_on_change = function(newQuery) {
+	query = newQuery;
+}
+
+var append = function() {
+	++number;
+	var videoId = "sm" + number + query;
+
+	var a = document.createElement("a");
+	a.setAttribute("href", "http://www.nicovideo.jp/watch/" + videoId);
+	a.textContent = "/watch/" + videoId;
+
+	var li = document.createElement("li");
+	li.appendChild(a);
+
+	var video_list = document.getElementById("video_list");
+	video_list.appendChild(li);
+}
+]]>
+  </script>
+ </body>
+</html>
+
