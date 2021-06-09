@@ -4,16 +4,16 @@
 // @description remove niconico's link query
 // @include     https://*.nicovideo.jp/*
 // @include     http://*.nicovideo.jp/*
-// @version     2.21
+// @version     3.00
 // ==/UserScript==
 
-(function() {
+(() => {
 "use strict";
 
 /**
  * URI文字列中のQueryを削除。
  */
-function removeQueryString(s) {
+const removeQueryString = (s) => {
 	if (s.indexOf('?') === -1) {
 		// '?'を含まないときは終了
 		return s;
@@ -24,22 +24,22 @@ function removeQueryString(s) {
 /**
  * Link Anchorであるか。
  */
-function isLinkAnchor(n) {
+const isLinkAnchor = (n) => {
 	return n.nodeType === Node.ELEMENT_NODE && (n.nodeName === "a" || n.nodeName === "A") && n.hasAttribute("href");
 }
 
 /**
  * NodeTreeに含まれるアンカーからQueryを削除。
  */
-function removeQueryInNodeTree(node) {
+const removeQueryInNodeTree = (node) => {
 	Array.from(node.childNodes).forEach(removeQueryInNodeTree);
 
 	if (!isLinkAnchor(node)) {
 		return;
 	}
 
-	var oldHref = node.getAttribute("href");
-	var newHref = removeQueryString(oldHref);
+	const oldHref = node.getAttribute("href");
+	const newHref = removeQueryString(oldHref);
 	if (newHref !== oldHref) {
 		node.setAttribute("href", newHref);
 	}
@@ -49,29 +49,25 @@ function removeQueryInNodeTree(node) {
 removeQueryInNodeTree(document);
 
 /* href属性が変更されたときにQueryを削除 */
-var hrefObserver = new MutationObserver(
-	function(mutations) {
+const hrefObserver = new MutationObserver(
+	(mutations) => {
 		mutations.forEach(
-			function(m) {
-				removeQueryInNodeTree(m.target);
-			}
+			(m) => removeQueryInNodeTree(m.target)
 		);
 	}
 );
-var hrefChangedConfig = { subtree: true, attributes: true, attributeFilter: ["href"] };
+const hrefChangedConfig = { subtree: true, attributes: true, attributeFilter: ["href"] };
 hrefObserver.observe(document, hrefChangedConfig);
 
 /* リンクが追加されたときにQueryを削除 */
-var childListObserver = new MutationObserver(
-	function(mutations) {
+const childListObserver = new MutationObserver(
+	(mutations) => {
 		mutations.forEach(
-			function(m) {
-				Array.from(m.addedNodes).forEach(removeQueryInNodeTree);
-			}
+			(m) => Array.from(m.addedNodes).forEach(removeQueryInNodeTree)
 		);
 	}
 );
-var childListConfig = { subtree: true, childList: true};
+const childListConfig = { subtree: true, childList: true};
 childListObserver.observe(document, childListConfig);
 
 })();
