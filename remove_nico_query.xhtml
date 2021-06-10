@@ -27,31 +27,30 @@
    <li><a href="http://seiga.nicovideo.jp/comic/11?nicorepo_user_manga_favorite&amp;zeromypage_nicorepo">http://seiga.nicovideo.jp/comic/11?nicorepo_user_manga_favorite&amp;zeromypage_nicorepo</a></li>
   </ol>
   <form onsubmit="append(); return false;">
-   <input value="?mypage_nicorepo" type="text" onchange="query_on_change(this.value)" />
+   <input value="?mypage_nicorepo=a&amp;comments_page=2&amp;track=own#comments" type="text" onchange="query_on_change(this.value)" />
    <input value="追加" type="button" onclick="append()" />
   </form>
   <script>
 <![CDATA[
-var number = 100;
-var query = "?mypage_nicorepo";
-var query_input = document.getElementById("query");
+let number = 100;
+let query = "?mypage_nicorepo=a&comments_page=2&track=own#comments";
 
-var query_on_change = function(newQuery) {
+const query_on_change = (newQuery) => {
 	query = newQuery;
 }
 
-var append = function() {
+const append = () => {
 	++number;
-	var videoId = "sm" + number + query;
+	const videoId = "sm" + number + query;
 
-	var a = document.createElement("a");
+	const a = document.createElement("a");
 	a.setAttribute("href", "http://www.nicovideo.jp/watch/" + videoId);
 	a.textContent = "/watch/" + videoId;
 
-	var li = document.createElement("li");
+	const li = document.createElement("li");
 	li.appendChild(a);
 
-	var video_list = document.getElementById("video_list");
+	const video_list = document.getElementById("video_list");
 	video_list.appendChild(li);
 }
 ]]>
