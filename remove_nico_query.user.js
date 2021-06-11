@@ -11,10 +11,10 @@
 "use strict";
 
 /**
- * URI文字列中のQueryを削除。
+ * URI文字列中の許可されていないQueryを削除。
  */
 const uriRe = /(.*)(watch|seiga|user|article|comic|community)(\/[A-Za-z]*\d+)\?([^#]*)(.*)$/;
-const allowQueryList = ['comments_page'];
+const allowedQuerySet = new Set(['comments_page']);
 const removeQueryString = (s) => {
 	const result = s.match(uriRe);
 	if (!result) {
@@ -23,11 +23,11 @@ const removeQueryString = (s) => {
 	}
 
 	let newQueryList = [];
-	const queryList = result[4].split('&');
-	queryList.forEach(
-		(e) => {
+	const queryPairList = result[4].split('&');
+	queryPairList.forEach(
+		e => {
 			const pair = e.split('=');
-			if (allowQueryList.includes(pair[0])) {
+			if (allowedQuerySet.has(pair[0])) {
 				newQueryList.push(e);
 			} 
 		}
