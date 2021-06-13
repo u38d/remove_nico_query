@@ -4,7 +4,7 @@
 // @description remove niconico's link query
 // @include     https://*.nicovideo.jp/*
 // @include     http://*.nicovideo.jp/*
-// @version     3.00
+// @version     3.01
 // ==/UserScript==
 
 (() => {
